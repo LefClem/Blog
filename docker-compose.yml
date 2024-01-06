@@ -1,0 +1,29 @@
+services:
+  backend: 
+    build: ./backend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/src:/app/src:rw
+      - ./backend/.env:/app/.env
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: clement
+      POSTGRES_PASSWORD: Klapaucius972!
+      POSTGRES_DB: blog
+      PGDATA: customDataFolder 
+    volumes:
+      - ./dbData:/var/lib/postgresql/data/customDataFolder
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d blog -U clement"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
