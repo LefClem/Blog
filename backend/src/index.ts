@@ -3,6 +3,8 @@ import database from "./config/db";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/user.resolver";
 import * as dotenv from 'dotenv'
+import { PostResolver } from "./resolvers/post.resolver";
+import { GraphQLError } from 'graphql'
 
 const port: number = 3000;
 
@@ -11,12 +13,38 @@ async function start(){
     await database.initialize()
 
     const schema = await buildSchema({
-        resolvers: [UserResolver],
-        validate: { forbidUnknownValues: false }
+        resolvers: [UserResolver, PostResolver],
+        validate: { forbidUnknownValues: false },
+        authChecker: ({ context }, roles) => {
+            try {
+                const payload: any = 
+            } catch (error) {
+                throw new GraphQLError('Vous n\'êtes pas authentifier', null ,null, null, null, null, 
+                {code: {
+                    'UNAUTHENTICATED'
+                }})
+            }
+        }
     })
 
     const server = new ApolloServer({
-        schema
+        schema,
+        context: async ({ req }) => {
+            if (
+                req?.headers.authorization === undefined ||
+                process.env.JWT_SECRET_KEY === undefined
+              ) {
+                return {};
+              } else {
+                try {
+                  const bearer = req.headers.authorization.split("Bearer ")[1];
+        
+                  return { token: bearer };
+                } catch (e) {
+                  console.log(e);
+                  return {};
+                }
+              }        }
     })
 
     try {
