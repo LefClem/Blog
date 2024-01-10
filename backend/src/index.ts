@@ -5,11 +5,12 @@ import { UserResolver } from "./resolvers/user.resolver";
 import * as dotenv from 'dotenv'
 import { PostResolver } from "./resolvers/post.resolver";
 import { GraphQLError } from 'graphql'
+import { verifyToken } from "./services/user.service";
 
+dotenv.config()
 const port: number = 3000;
 
 async function start(){
-    dotenv.config()
     await database.initialize()
 
     const schema = await buildSchema({
@@ -17,12 +18,16 @@ async function start(){
         validate: { forbidUnknownValues: false },
         authChecker: ({ context }, roles) => {
             try {
-                const payload: any = 
+                const payload: any = verifyToken(context.token);
+                const { email, userId } = payload; 
+                console.log(email, userId)
+
+                return true;
             } catch (error) {
                 throw new GraphQLError('Vous n\'êtes pas authentifier', null ,null, null, null, null, 
-                {code: {
+                {code: 
                     'UNAUTHENTICATED'
-                }})
+                })
             }
         }
     })
