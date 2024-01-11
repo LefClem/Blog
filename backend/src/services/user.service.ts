@@ -6,7 +6,7 @@ export function getAllUsers(): Promise<User[]> {
     return User.find();
 }
 
-export function verifyToken(token: string){
+export function verifyToken(token: string){    
     console.log(process.env.JWT_SECRET_KEY);
     
     if(!process.env.JWT_SECRET_KEY){
