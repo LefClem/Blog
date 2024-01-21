@@ -5,7 +5,6 @@ services:
       - 3000:3000
     volumes:
       - ./backend/src:/app/src:rw
-      - ./backend/.env:/app/.env:rw
 
   db:
     image: postgres
