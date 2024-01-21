@@ -4,9 +4,11 @@ import * as UserServices from '../services/user.service'
 
 @Resolver(User)
 export class UserResolver {
-    @Query(() => [User])
-    getUser(): Promise<User[]> {
-        return UserServices.getAllUsers();
+    @Query(() => User)
+    getUser(
+        @Arg("email") email: string
+    ): Promise<any> {
+        return UserServices.getUser(email);
     }
 
     @Mutation(() => User)

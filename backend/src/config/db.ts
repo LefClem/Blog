@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { User } from '../entities/user';
 import { Post } from '../entities/post';
 import * as dotenv from 'dotenv'
+import { Commentary } from '../entities/commentary';
 
 dotenv.config()
 
@@ -12,10 +13,9 @@ const database = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: "blog",
-    entities: [User, Post],
+    entities: [User, Post, Commentary],
     logging: true,
     synchronize: true
 })
-console.log(database);
 
 export default database;

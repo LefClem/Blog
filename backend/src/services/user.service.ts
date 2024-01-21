@@ -2,13 +2,11 @@ import { User } from "../entities/user";
 import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
 
-export function getAllUsers(): Promise<User[]> {
-    return User.find();
+export function getUser(email: string): Promise<User> {
+    return User.findOneByOrFail({ email });
 }
 
-export function verifyToken(token: string){    
-    console.log(process.env.JWT_SECRET_KEY);
-    
+export function verifyToken(token: string){        
     if(!process.env.JWT_SECRET_KEY){
         return {}
     } else {
@@ -37,7 +35,7 @@ export async function login(email: string, password: string): Promise<string> {
         const token = jwt.sign({
             email: email,
             userId: user.id
-        }, "iojdieoapjdieozhduioezhudoiezndopjazdjao");
+        }, "iojdieoapjdieozhduioezhudoiezndopjazdjao", { expiresIn: '1h' });
 
         const authUser = verifyToken(token);
         console.log(authUser);

@@ -6,10 +6,11 @@ import { Post } from "./post";
 @Entity()
 export class User extends BaseEntity {
     @Column()
+    @Field()
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({ unique: true })
     @Field()
     email: string;
 
@@ -17,8 +18,9 @@ export class User extends BaseEntity {
     password: string;
 
     @Column()
+    @Field()
     role: string;
 
     @OneToMany(() => Post, (post) => post.user)
-    post: number;
+    post: Post[];
 }
