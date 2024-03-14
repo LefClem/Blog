@@ -7,16 +7,11 @@ export function getUser(email: string): Promise<User> {
 }
 
 export function verifyToken(token: string){        
-    if(!process.env.JWT_SECRET_KEY){
-        return {}
-    } else {
-        try {
-            const user: any = jwt.verify(token ,process.env.JWT_SECRET_KEY);
-            return user;
-        } catch (error) {
-            throw new Error();
-        }
-    }
+    // if(!process.env.JWT_SECRET_KEY){
+    //     return {}
+    // } else {
+        return jwt.verify(token ,'process.env.JWT_SECRET_KEY');
+    // }
 } 
 
 export async function signup(email: string, password: string): Promise<User> {
@@ -30,12 +25,15 @@ export async function signup(email: string, password: string): Promise<User> {
 
 export async function login(email: string, password: string): Promise<string> {
     const user = await User.findOneByOrFail({ email });
+    console.log(process.env.JWT_SECRET_KEY);
+    
 
     if (await argon2.verify(user.password, password)) {
         const token = jwt.sign({
             email: email,
             userId: user.id
-        }, "iojdieoapjdieozhduioezhudoiezndopjazdjao", { expiresIn: '1h' });
+        }, 'process.env.JWT_SECRET_KEY'
+        , { expiresIn: '1h' });
 
         const authUser = verifyToken(token);
         console.log(authUser);

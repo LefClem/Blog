@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 import { Commentary } from "./commentary";
 
@@ -15,10 +15,10 @@ export class Post extends BaseEntity {
     description: string;
 
     @Field(() => User)
-    @ManyToOne(() => User, (user) => user.post )
+    @ManyToOne(() => User, (user) => user.post)
     user: User;
 
-    @Field()
-    @OneToMany(() => Commentary, (commentary) => commentary.post)
-    commentary: Commentary;
+    @Field(() => [Commentary])
+    @OneToMany(() => Commentary, commentary => commentary.post,  { cascade: true, onDelete: "CASCADE"})
+    commentaries: Commentary[];
 }

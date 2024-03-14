@@ -18,7 +18,7 @@ export class PostResolver {
     @Query(() => [Post])
     getPosts(
         @Ctx() ctx: any
-    ): Promise<Post[] | undefined>{
+    ): Promise<Post[] | undefined>{        
         return PostServices.getAllPosts();
     }
 
@@ -28,15 +28,15 @@ export class PostResolver {
         @Ctx() ctx: Context,
         @Arg("description") description: string
     ): Promise<Post>{
-        console.log(ctx);
         return PostServices.create(description, ctx);
     }
 
     @Authorized()
     @Mutation(() => String)
     deletePost(
+        @Ctx() ctx: Context,
         @Arg("id") id: number
     ): Promise<string> {
-        return PostServices.deleteById(id);
+        return PostServices.deleteById(id, ctx);
     }
 }

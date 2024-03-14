@@ -13,10 +13,7 @@ export async function create(commentary: string, postId: number): Promise<Commen
         }
         const newCommentary = new Commentary;
         newCommentary.commentary = commentary;
-        newCommentary.post = post;
-
-        console.log(newCommentary);
-        
+        newCommentary.post = post;        
 
         return newCommentary.save();
     } catch (error) {

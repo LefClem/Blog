@@ -1,4 +1,5 @@
 import { ApolloServer } from "apollo-server";
+import * as dotenv from 'dotenv';
 import database from "./config/db";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/user.resolver";
@@ -8,6 +9,8 @@ import { getUser, verifyToken } from "./services/user.service";
 import { CommentaryResolver } from "./resolvers/commentary.resolver";
 
 const port: number = 3000;
+
+dotenv.config();
 
 async function start() {
     await database.initialize()
@@ -22,6 +25,8 @@ async function start() {
 
                 return true;
             } catch (error) {
+                console.log(context);
+                
                 throw new GraphQLError('Vous n\'êtes pas authentifier', null, null, null, null, null,
                     {
                         code:
@@ -35,8 +40,9 @@ async function start() {
         schema,
         context: async ({ req }) => {
             if (
-                req?.headers.authorization === undefined ||
-                process.env.JWT_SECRET_KEY === undefined
+                req?.headers.authorization === undefined 
+                // ||
+                // process.env.JWT_SECRET_KEY === undefined
             ) {
                 return {};
             } else {

@@ -5,6 +5,8 @@ services:
       - 3000:3000
     volumes:
       - ./backend/src:/app/src:rw
+      - ./backend/package.json:/app/package.json:rw
+      - /app/node_modules
 
   db:
     image: postgres

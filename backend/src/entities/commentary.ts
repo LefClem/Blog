@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "./post";
 
 @ObjectType()
@@ -13,6 +13,6 @@ export class Commentary extends BaseEntity {
     @Field()
     commentary: string;
 
-    @ManyToOne(() => Post, (post) => post.commentary)
+    @ManyToOne(() => Post, post => post.commentaries, { onDelete: 'SET NULL' })
     post: Post;
 }

@@ -1,19 +1,31 @@
 import { Post } from "../entities/post";
+import { Context } from 'apollo-server-core'
+require('dotenv').config()
 
 export async function getPostById(id: number): Promise<Post | null> {
-    return Post.findOne({
+    
+    
+    const result = await Post.findOne({
         relations: {
-            user: true
+            user: true,
+            commentaries: true
         },
         where: {
             id : id
         }
     })
+    
+    return result;
 }
 
 export function getAllPosts(): Promise<Post[] | undefined>{
+    console.log(process.env.DB_USER);
+    
     return Post.find({
-        relations: ['user', 'commentary']
+        relations: {
+            user: true,
+            commentaries: true
+        }
     });
 }
 
@@ -25,9 +37,22 @@ export function create(description: string, ctx: any): Promise<Post> {
     return newPost.save();
 }
 
-export async function deleteById(id: number): Promise<string>{
+export async function deleteById(id: number, ctx: any): Promise<string>{
+    const post = await Post.findOne({
+        relations: {
+            user: true,
+            commentaries: true
+        },
+        where: {
+            id : id
+        }
+    })    
+    if(!post){
+        return ('No post found')
+    } else if(post?.user.id !== ctx.user.id){
+        return ('Not authorized')
+    } 
     const result = await Post.delete({ id : id });
-    console.log(result);
     if(result.affected === 0){
         return "This post doesn't exist"
     } else {

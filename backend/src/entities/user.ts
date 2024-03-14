@@ -5,7 +5,6 @@ import { Post } from "./post";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-    @Column()
     @Field()
     @PrimaryGeneratedColumn()
     id: number
