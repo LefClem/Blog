@@ -10,7 +10,7 @@ describe("User resolver", () => {
         server = await createServer(() => tokenContext);
     })
 
-    it("should create a new user", async () => {
+    it("should return an error when you try to create a new user with existing mail", async () => {
         const userCreateMutation = gql`
         mutation CreateUser($password: String!, $email: String!) {
             createUser(password: $password, email: $email) {
@@ -27,10 +27,7 @@ describe("User resolver", () => {
                 email: "clem@mail.com",
                 password: "test1234"
             }
-        })
-
-        console.log(response);
-        
+        })        
 
         expect(response.errors).toBeDefined();
     })
