@@ -18,9 +18,7 @@ export async function getPostById(id: number): Promise<Post | null> {
     return result;
 }
 
-export function getAllPosts(): Promise<Post[] | undefined>{
-    console.log(process.env.DB_USER);
-    
+export function getAllPosts(): Promise<Post[] | undefined>{    
     return Post.find({
         relations: {
             user: true,
@@ -38,6 +36,8 @@ export function create(description: string, ctx: any): Promise<Post> {
 }
 
 export async function deleteById(id: number, ctx: any): Promise<string>{
+    console.log(ctx);
+    
     const post = await Post.findOne({
         relations: {
             user: true,

@@ -1,11 +1,15 @@
 services:
   backend: 
     build: ./backend
+    env_file:
+      - ./backend/.env
     ports:
       - 3000:3000
     volumes:
       - ./backend/src:/app/src:rw
       - ./backend/package.json:/app/package.json:rw
+      - ./backend/package-lock.json:/app/package-lock.json:rw
+      - ./backend/jest.config.js:/app/jest.config.js:rw
       - /app/node_modules
 
   db:

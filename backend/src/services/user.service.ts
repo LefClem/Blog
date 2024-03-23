@@ -7,11 +7,11 @@ export function getUser(email: string): Promise<User> {
 }
 
 export function verifyToken(token: string){        
-    // if(!process.env.JWT_SECRET_KEY){
-    //     return {}
-    // } else {
-        return jwt.verify(token ,'process.env.JWT_SECRET_KEY');
-    // }
+    if(!process.env.JWT_SECRET_KEY){
+        return {}
+    } else {
+        return jwt.verify(token ,process.env.JWT_SECRET_KEY);
+    }
 } 
 
 export async function signup(email: string, password: string): Promise<User> {
@@ -24,23 +24,37 @@ export async function signup(email: string, password: string): Promise<User> {
 }
 
 export async function login(email: string, password: string): Promise<string> {
-    const user = await User.findOneByOrFail({ email });
-    console.log(process.env.JWT_SECRET_KEY);
-    
 
-    if (await argon2.verify(user.password, password)) {
-        const token = jwt.sign({
-            email: email,
-            userId: user.id
-        }, 'process.env.JWT_SECRET_KEY'
-        , { expiresIn: '1h' });
-
-        const authUser = verifyToken(token);
-        console.log(authUser);
+    try {
+        // Récupérer l'utilisateur dans la bdd suivant l'email
+        const user = await User.findOneByOrFail({ email });
         
-        
-        return token;
-    } else {
-        return "Auht failed"
-    }
+        // Vérifier que ce sont les même mots de passe
+        if (
+          await argon2.verify(user.password, password)
+        ) {
+          // Créer un nouveau token => signer un token
+          const token = signJwt({
+            email: user.email,
+            role: user.role,
+          });
+  
+          // Renvoyer le token
+          return token;
+        } else {
+          throw new Error();
+        }
+      } catch (e) {
+        throw new Error("Invalid Auth");
+      }
 }
+
+export function signJwt(payload: any) {
+    if (process.env.JWT_SECRET_KEY === undefined) {
+      throw new Error();
+    }
+  
+    return jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+      expiresIn: 60 * 60,
+    });
+  }

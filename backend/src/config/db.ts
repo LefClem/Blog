@@ -14,7 +14,7 @@ const database = new DataSource({
     password: 'Klapaucius972!',//process.env.DB_PASSWORD,
     database: "blog",
     entities: [User, Post, Commentary],
-    logging: true,
+    logging: false,
     synchronize: true
 })
 

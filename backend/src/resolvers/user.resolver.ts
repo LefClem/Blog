@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import { User } from "../entities/user";
-import * as UserServices from '../services/user.service'
+import * as UserServices from "../services/user.service"
 
 @Resolver(User)
 export class UserResolver {

@@ -6,7 +6,6 @@ import { Context } from 'apollo-server-core'
 
 @Resolver(Post)
 export class PostResolver {
-    @Authorized()
     @Query(() => Post)
     getPost(
         @Arg("id") id: number,
@@ -14,7 +13,6 @@ export class PostResolver {
         return PostServices.getPostById(id);
     }
 
-    @Authorized()
     @Query(() => [Post])
     getPosts(
         @Ctx() ctx: any
