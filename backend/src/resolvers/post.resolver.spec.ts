@@ -50,24 +50,26 @@ describe("Category resolver", () => {
     expect(response.data?.getPost.description).toBe("test");
   });
 
-  // it("should create a new post", async () => {
-  //   const postQuery = gql`
-  //   mutation Mutation($description: String!) {
-  //     newPost(description: $description) {
-  //       id
-  //       description
-  //     }
-  //   }
-  //   `;
+  it("should create a new post", async () => {
+    const postQuery = gql`
+    mutation Mutation($description: String!) {
+      newPost(description: $description) {
+        id
+        description
+      }
+    }
+    `;
 
-  //   const response = await server.executeOperation({
-  //     query: postQuery,
-  //     variables: {
-  //       description: "Un post pour le test"
-  //     }
-  //   });
+    const response = await server.executeOperation({
+      query: postQuery,
+      variables: {
+        description: "Un post pour le test"
+      }
+    });
 
-  //   expect(response.data?.newPost).toBeDefined();
-  //   expect(response.data?.newPost.description).toBe("Un post pour le test")
-  // })
+    console.log(response);
+
+    expect(response.data?.newPost).toBeDefined();
+    expect(response.data?.newPost.description).toBe("Un post pour le test")
+  })
 })
