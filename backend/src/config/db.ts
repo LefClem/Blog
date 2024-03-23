@@ -13,7 +13,7 @@ const database = new DataSource({
     username: 'clement',//process.env.DB_USER,
     password: 'Klapaucius972!',//process.env.DB_PASSWORD,
     database: 'blog',
-    entities: [User, Post, Commentary],
+    entities: ["src/entities/*.ts"],
     logging: true,
     synchronize: true
 })
