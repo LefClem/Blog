@@ -12,7 +12,7 @@ const database = new DataSource({
     port: 5432,
     username: 'clement',//process.env.DB_USER,
     password: 'Klapaucius972!',//process.env.DB_PASSWORD,
-    database: "blog",
+    database: 'blog',
     entities: [User, Post, Commentary],
     logging: false,
     synchronize: true

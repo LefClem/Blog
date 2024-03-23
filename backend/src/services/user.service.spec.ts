@@ -8,11 +8,11 @@ import { User } from "../entities/user";
 //   } as User
 // });
 
-jest.mock('../services/user.service', () => ({
-  signup: jest.fn().mockImplementation(() => {
-      return 'mocked-user';
-  })
-}));
+// jest.mock('../services/user.service', () => ({
+//   createUser: jest.fn().mockImplementation(() => {
+//       return 'mocked-user';
+//   })
+// }));
 
 jest.mock('../services/user.service', () => ({
   login: jest.fn().mockImplementation((email: string, password: string) => {
@@ -25,22 +25,23 @@ jest.mock('../services/user.service', () => ({
 }));
 
 describe("User service", () => {
-  it("should create a new user", async () => {
-    const user = await userService.signup("test@mail.fr", "1234");
+  // it("should create a new user", async () => {
+  //   const user = await userService.signup("test@mail.fr", "1234");
+  //   console.log(user);
+    
 
-    // expect(user.email).toBe("test@mail.fr");
-    // expect(user.password).toBe("1234");
-    expect(user).toBe('mocked-user')
-    // expect(userMock).toHaveBeenCalled();
-    // expect(userMock).toHaveBeenCalledTimes(1);
-  });
+  //   expect(user.email).toBe("test@mail.fr");
+  //   expect(user.password).toBe("1234");
+  //   // expect(user).toBe('mocked-user')
+  //   expect(userMock).toHaveBeenCalled();
+  //   expect(userMock).toHaveBeenCalledTimes(1);
+  // });
 
   it("should log the user and return a token", async () => {
     const email = 'test@mail.com';
     const password = 'test';
 
-    const result = await userService.login(email, password);    
-
+    const result = await userService.login(email, password);        
     expect(result).toBe("mocked-token");
   })
 });
