@@ -4,7 +4,7 @@ on: push
 
 jobs:
   test-server:
-    runs-on: unbuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
