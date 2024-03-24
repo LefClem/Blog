@@ -27,10 +27,7 @@ describe("User resolver", () => {
                 email: "clem@mail.com",
                 password: "test1234"
             }
-        })
-        
-        console.log(response.errors);
-        
+        })        
 
         expect(response.errors).toBeDefined();
     })

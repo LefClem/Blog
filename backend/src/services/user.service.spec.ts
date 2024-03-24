@@ -1,5 +1,4 @@
 import * as userService from "../services/user.service";
-import { User } from "../entities/user";
 
 jest.mock('../services/user.service', () => ({
   login: jest.fn().mockImplementation((email: string, password: string) => {
