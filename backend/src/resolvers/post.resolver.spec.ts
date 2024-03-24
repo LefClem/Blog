@@ -53,8 +53,6 @@ describe("Post resolver", () => {
     })
 
     it("should delete a post", async () => {
-      await PostService.create("test");
-
       const postQuery = gql`
       mutation Mutation($deletePostId: Float!) {
         deletePost(id: $deletePostId)
