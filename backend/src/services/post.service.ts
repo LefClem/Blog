@@ -1,5 +1,6 @@
 import { Post } from "../entities/post";
 import { Context } from 'apollo-server-core'
+import { User } from "../entities/user";
 require('dotenv').config()
 
 export async function getPostById(id: number): Promise<Post | null> {
@@ -27,7 +28,7 @@ export function getAllPosts(): Promise<Post[] | undefined>{
     });
 }
 
-export function create(description: string, ctx: any): Promise<Post> {
+export function create(description: string, ctx?: any): Promise<Post> {
     const newPost = new Post();
     newPost.description = description;
     newPost.user = ctx && ctx.user.id;
