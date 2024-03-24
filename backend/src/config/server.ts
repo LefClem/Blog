@@ -13,7 +13,6 @@ dotenv.config();
 
 async function createServer(customContext: any = undefined):Promise<ApolloServer>{
     await database.initialize();
-    await database.synchronize();
 
     const schema = await buildSchema({
         resolvers: [UserResolver, PostResolver, CommentaryResolver],

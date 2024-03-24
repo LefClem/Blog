@@ -1,8 +1,5 @@
 import { DataSource } from 'typeorm';
-import { User } from '../entities/user';
-import { Post } from '../entities/post';
 import * as dotenv from 'dotenv'
-import { Commentary } from '../entities/commentary';
 
 dotenv.config()
 

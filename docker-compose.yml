@@ -11,6 +11,8 @@ services:
       - ./backend/package-lock.json:/app/package-lock.json:rw
       - ./backend/jest.config.js:/app/jest.config.js:rw
       - /app/node_modules
+    depends_on:
+      - db
 
   db:
     image: postgres
