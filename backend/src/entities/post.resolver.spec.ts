@@ -28,7 +28,7 @@ describe("Post resolver", () => {
     })
 
     it("should return a post by id", async () => {
-        await PostService.create("Test", 1);
+        await PostService.create("Test");
 
         const postQuery = gql`
         query Query($getPostId: Float!) {
