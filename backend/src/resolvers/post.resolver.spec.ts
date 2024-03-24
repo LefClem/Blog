@@ -44,12 +44,34 @@ describe("Post resolver", () => {
             variables: {
                 getPostId: 1
             }
-        })
-        console.log(response);
-        
+        })        
 
         expect(response.errors).toBeUndefined();
         expect(response.data?.getPost).toBeDefined();
+        expect(response.data?.getPost.id).toBe(1);
+        expect(response.data?.getPost.description).toBe('test');
+    })
 
+    it("should delete a post", async () => {
+      await PostService.create("test");
+
+      const postQuery = gql`
+      mutation Mutation($deletePostId: Float!) {
+        deletePost(id: $deletePostId)
+      }
+      `;
+
+      const response = await server.executeOperation({
+        query: postQuery,
+        variables: {
+          deletePostId: 1
+        }
+      });
+
+      console.log(response.errors?.[0].message);
+      
+
+      expect(response.errors).toBeDefined();
+      expect(response.errors?.[0].message).toBe(`Vous n'êtes pas authentifier`)
     })
 })
