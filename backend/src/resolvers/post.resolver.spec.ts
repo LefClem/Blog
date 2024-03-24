@@ -47,7 +47,7 @@ describe("Post resolver", () => {
         expect(response.errors).toBeUndefined();
         expect(response.data?.getPost).toBeDefined();
         expect(response.data?.getPost.id).toBe(1);
-        expect(response.data?.getPost.description).toBe("test");
+        expect(response.data?.getPost.description).toBe("Test");
     })
 
     it("should delete a post", async () => {
