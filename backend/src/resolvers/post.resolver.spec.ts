@@ -28,7 +28,7 @@ describe("Post resolver", () => {
     })
 
     it("should return a post by id", async () => {
-        await PostService.create("test");
+        await PostService.create("Test");
 
         const postQuery = gql`
         query Query($getPostId: Float!) {
@@ -49,7 +49,7 @@ describe("Post resolver", () => {
         expect(response.errors).toBeUndefined();
         expect(response.data?.getPost).toBeDefined();
         expect(response.data?.getPost.id).toBe(1);
-        expect(response.data?.getPost.description).toBe("test");
+        expect(response.data?.getPost.description).toBe("Test");
     })
 
     it("should delete a post", async () => {
@@ -67,6 +67,9 @@ describe("Post resolver", () => {
           deletePostId: 1
         }
       });      
+
+      console.log(response);
+      
 
       expect(response).toBeDefined();
       expect(response.errors).toBeDefined();
