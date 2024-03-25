@@ -5,7 +5,6 @@ require('dotenv').config()
 
 export async function getPostById(id: number): Promise<Post | null> {
     
-    
     const result = await Post.findOne({
         relations: {
             user: true,
