@@ -29,8 +29,8 @@ jobs:
         run: cd backend && npm i && npm test
 
   docker:
-      needs: test-front
-      if: github.ref == 'refs/heads/master'
+      needs: test-backend
+      if: github.ref == 'refs/heads/origin'
       runs-on: ubuntu-latest
       steps:
         - name: Set up QEMU
