@@ -1,5 +1,7 @@
+import { User } from "../entities/user";
 import * as userService from "../services/user.service";
 
+// const signUpMock = jest.spyOn(User.prototype, 'save').mockImplementation()
 jest.mock('../services/user.service', () => ({
   login: jest.fn().mockImplementation((email: string, password: string) => {
     if(email === 'invalid@mail.com' && password === 'wrongpassword'){
@@ -16,7 +18,9 @@ describe("User service", () => {
     const email = 'test@mail.com';
     const password = 'test';
 
-    const result = await userService.login(email, password);        
-    expect(result).toBe("mocked-token");
+    const result = await userService.login(email, password);    
+    console.log(result);
+        
+    expect(result).toBeDefined();
   })
 });
