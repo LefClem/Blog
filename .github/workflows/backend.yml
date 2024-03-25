@@ -47,4 +47,4 @@ jobs:
           with:
             push: true
             context: "{{defaultContext}}:backend"
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/Blog:latest
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/blog:latest
